@@ -22,7 +22,7 @@ char	**new_double_array_unset(char *old, char **env, int oldlen)
 		else
 			env1++;
 	}
-	free_array(env);
+	free_arrah(env);
 	*new1 = NULL;
 	return (new);	
 }

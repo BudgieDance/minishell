@@ -18,8 +18,8 @@ void	pwd()
 	free(s);
 }
 
-int		main()
+/*int		main()
 {
 	pwd();
 	return (0);
-}
+}*/

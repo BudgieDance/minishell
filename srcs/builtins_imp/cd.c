@@ -25,7 +25,7 @@ void cd(char **args)
 	}
 }
 
-int main()
+/*int main()
 {
 	char s[100];
 
@@ -38,4 +38,4 @@ int main()
 	cd(args);
 	printf("%s\n", getcwd(s, 100));	
 	return (0);
-}
+}*/

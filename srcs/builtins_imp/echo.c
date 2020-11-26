@@ -28,12 +28,12 @@ void	echo(char **args)
 		write(1, "\n", 1);
 }
 
-int		main()
+/*int		main()
 {
 	char *args[] = {"echo", "-n", "ggg", "fff", NULL};
 	//char *args[] = {"echo", "ggg", "fff", NULL};
 	echo(args);
 	return (0);
-}
+}*/
 		
 	

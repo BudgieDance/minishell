@@ -10,8 +10,8 @@ void	envp(char **env)
 	}
 }
 
-int		main(int argc, char **argv, char **env)
+/*int		main(int argc, char **argv, char **env)
 {
 	envp(env);
 	return (0);
-}
+}*/

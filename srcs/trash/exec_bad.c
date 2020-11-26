@@ -15,7 +15,14 @@ void write_to_pipe(t_args *x)
 		dup2(fd[1], 1);
 		close(fd[0]);
 		close(fd[1]);
-		execv(command, x->args);
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		return ;
 	}
 	//parent process
 	waitpid(id, NULL, 0);
@@ -25,7 +32,7 @@ void write_to_pipe(t_args *x)
 	close(fd[0]);
 }
 
-void write_to_stdout(t_args *x)
+void write_to_stdout(t_args *x, int temp_fd)
 {
 	int id;
 	char *command = "/usr/bin/";
@@ -34,14 +41,23 @@ void write_to_stdout(t_args *x)
 	command = ft_strjoin(command, *(x->args));
 	if (id == 0)
 	//child process
-		execv(command, x->args);
+	{
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		return ;
+	}
 	//parent process
 	waitpid(id, NULL, 0);
 	free(command);
-	dup2(x->temp_fd_0, 0);
+	dup2(temp_fd, 0);
 }
 	
-void write_to_file(t_args *x)
+void write_to_file(t_args *x, int temp_fd)
 {
 	int id;
 	int fd;
@@ -59,12 +75,19 @@ void write_to_file(t_args *x)
 	//child process
 	{
 		dup2(fd, 1);
-		execv(command, x->args);
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		return ;
 	}
 	//parent process
 	waitpid(id, NULL, 0);
 	free(command);
-	dup2(x->temp_fd_0, 0);
+	dup2(temp_fd, 0);
 }
 
 int check_command(char **args)
@@ -87,20 +110,15 @@ int check_command(char **args)
 		return (0);
 }
 
-void exec_command(t_args *x, int flag)
+char **exec_command(t_args *x, int flag, int temp_fd)
 {
 	x->orig_imp = check_command(x->args);
-	if (x->orig_imp != 0)
-		exec_command_imp(x, flag);
+	if (flag == 1)
+		write_to_pipe(x);
+	else if (flag == 2)
+		write_to_file(x, temp_fd);
+	else if (flag == 3)
+		from_file(x, temp_fd); 
 	else
-	{
-		if (flag == 1)
-			write_to_pipe(x);
-		else if (flag == 2)
-			write_to_file(x);
-		else if (flag == 3)
-			from_file(x); 
-		else
-			write_to_stdout(x);
-	}
+		write_to_stdout(x, temp_fd);
 }

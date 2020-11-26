@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void	free_array(char **env)
+void	free_arrah(char **env)
 {
 	char **env1;
 

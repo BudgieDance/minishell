@@ -15,7 +15,7 @@ char	**new_double_array_export(char *arg, char **env, int len)
 		new1++;
 		env1++;
 	}
-	free_array(env);
+	free_arrah(env);
 	*new1 = ft_strdup(arg);
 	new1++;
 	*new1 = NULL;

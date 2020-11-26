@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-void ff_to_out(t_args *x, int fd)
+void ff_to_out(t_args *x, int fd, int temp_fd)
 {
 	int id;
 	char *command = "/usr/bin/";
@@ -11,12 +11,19 @@ void ff_to_out(t_args *x, int fd)
 	//child process
 	{
 		dup2(fd, 0);
-		execv(command, x->args);
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		return ;
 	}
 	//parent process
 	waitpid(id, NULL, 0);
 	free(command);
-	dup2(x->temp_fd_0, 0);
+	dup2(temp_fd, 0);
 }
 
 void ff_to_pipe(t_args *x, int fdi)
@@ -35,7 +42,14 @@ void ff_to_pipe(t_args *x, int fdi)
 		dup2(fd[1], 1);
 		close(fd[0]);
 		close(fd[1]);
-		execv(command, x->args);
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		return ;
 	}
 	//parent process
 	waitpid(id, NULL, 0);
@@ -45,7 +59,7 @@ void ff_to_pipe(t_args *x, int fdi)
 	close(fd[0]);
 }
 	
-void ff_to_file(t_args *x, int fdi)
+void ff_to_file(t_args *x, int fdi, int temp_fd)
 {
 	int id;
 	int fd;
@@ -62,24 +76,32 @@ void ff_to_file(t_args *x, int fdi)
 	{
 		dup2(fdi, 0);
 		dup2(fd, 1);
-		execv(command, x->args);
+		if (x->orig_imp == 0)
+			execv(command, x->args);
+		else
+		{
+			free(command);
+			x->env = implement(x->args, x->env, x->orig_imp);
+		}
+		execv(command, (x->args));
+		return ;
 	}
 	//parent process
 	waitpid(id, NULL, 0);
 	free(command);
-	dup2(x->temp_fd_0, 0);
+	dup2(temp_fd, 0);
 }
 
-void from_file(t_args *x)
+void from_file(t_args *x, int temp_fd)
 {
 	int fd;
 
 	fd = open(x->inp_file, O_RDONLY);
 	if (x->out_pipe_red == 0)
-		ff_to_out(x, fd);
+		ff_to_out(x, fd, temp_fd);
 	else if (x->out_pipe_red == 1)
 		ff_to_pipe(x, fd);
 	else
-		ff_to_file(x, fd);
+		ff_to_file(x, fd, temp_fd);
 	close (fd);
 }

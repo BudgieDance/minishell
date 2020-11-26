@@ -13,16 +13,17 @@ void	free_array(char **env)
 	free(env);
 }
 
-void	my_exit(char **env)
+void	my_exit(char **arg, char **env)
 {
+	free_array(arg);
 	free_array(env);
 	exit(33);
 }
 
-int		main(int argc, char **argv, char **env)
+/*int		main(int argc, char **argv, char **env)
 {
 	char **dyn_env;
 	dyn_env = convert_array(env);
 	my_exit(dyn_env);
 	return (0);
-}
+}*/
