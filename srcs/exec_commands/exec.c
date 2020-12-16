@@ -212,6 +212,16 @@ int check_command(char **args)
 		return (0);
 }
 
+void clear_struct(t_args *x)
+{
+	if (x->args)
+		ft_strarrclear(&(x->args));
+	if (x->red_file)
+		ft_strarrclear(&(x->red_file));
+	if (x->inp_file)
+		free (x->inp_file);
+}
+
 void exec_command(t_args *x, int flag)
 {
 	exit_status = 0;
@@ -229,4 +239,5 @@ void exec_command(t_args *x, int flag)
 		else
 			write_to_stdout(x);
 	}
+	//clear_struct(x);
 }

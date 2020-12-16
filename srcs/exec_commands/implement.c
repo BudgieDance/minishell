@@ -5,7 +5,7 @@ char **implement(char **args, char **env, int imp)
    if (imp == 1) 
         echo(args);
     else if (imp == 2)
-        cd(args);
+        env = cd(args, env);
     else if (imp == 3)
         pwd();
     else if (imp == 4)
