@@ -58,7 +58,8 @@ int		check_fork(t_vars *vars, int temp_fd_0)
 		write(1, str, ft_strlen(str));
 		write(1, "\n", 1);
 		dup2(temp_fd_0, 0);
-		close(vars->fdd);
+		if (vars->fdd)
+			close(vars->fdd);
 		return (1);
 	}
 	return (0);

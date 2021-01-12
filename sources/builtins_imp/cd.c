@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlavelle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 14:13:19 by tlavelle          #+#    #+#             */
-/*   Updated: 2021/01/07 14:13:23 by tlavelle         ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,17 @@ char	**change_env(char **env, char *oldpwd, char *pwd)
 	return (env);
 }
 
-int		check_cd_args(char **args)
+int		check_cd_args(char **args, char ***env)
 {
 	if (*args == NULL)
 	{
+		*env = cd_home(*env);
 		return (1);
 	}
 	if (*(args + 1) != NULL)
 	{
 		write(1, "bash: cd: too many arguments\n", 29);
-		exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	return (0);
@@ -86,7 +87,7 @@ int		check_path(char **args)
 		write(1, ": ", 2);
 		write(1, err, ft_strlen(err));
 		write(1, "\n", 1);
-		exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	return (0);
@@ -98,7 +99,7 @@ char	**cd(char **args, char **env)
 	char *test;
 
 	args++;
-	if (check_cd_args(args) == 1)
+	if (check_cd_args(args, &env) == 1)
 		return (env);
 	test = get_directory();
 	if (test == NULL)

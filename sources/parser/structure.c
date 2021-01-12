@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 20:13:08 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/06 20:14:13 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 15:41:07 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int		init_arg_struct(t_args *args)
 	args->inp_count = 0;
 	if (!(args->inp_files = ft_calloc(sizeof(char *), args->argc + 2)))
 		return (0);
-	args->orig_imp = -1;
+	args->orig_imp = 0;
 	if (!(args->write_append = ft_calloc(sizeof(int), args->red_count + 2)))
 		return (0);
-	args->out_pipe_red = -1;
+	args->out_pipe_red = 0;
 	return (1);
 }
 

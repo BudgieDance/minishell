@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 21:31:50 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/06 20:20:56 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		parse_env(t_args *args, char ***strarr, int *strnum, char **str)
 	if (**str == '?')
 	{
 		return (((*strarr)[*strnum] = add_str_to_str((*strarr)[*strnum]
-									, ft_itoa(exit_status))) ? 1 : 0);
+									, ft_itoa(g_exit_status))) ? 1 : 0);
 	}
 	if (!**str || ft_strchr(SPEC_SYMBOLS, **str))
 	{

@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/23 21:08:56 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/06 20:19:49 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 21:41:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,158 +24,176 @@
 # include <signal.h>
 # include "libft.h"
 
-int		exit_status;
-char	*line;
+int				g_exit_status;
+char			*g_line;
 
 typedef struct	s_args
 {
-	char	**argv;
-	int		argc;
-	char	**env;
-	int		write_to; // если |, то 1, если > или >>, то 2
-	char	**red_files; //output file если встретился >
-	int		red_count;
-	char	**inp_files; //input file если встретился <
-	int		inp_count;
-	int		orig_imp;
-	int		*write_append; // если встретился >. write(>) - 1, append(>>) - 2
-	int		out_pipe_red; //куда записывать если встретился < .  stdout - 0
-						  //pipe - 1(если после < встреился |),
-						  //redirect - 2(если после < встретился > или >>, также поменять write_append)
-	int		temp_fd_0;
-	int		temp_fd_1;
-}               t_args;
+	char		**argv;
+	int			argc;
+	char		**env;
+	int			write_to;
+	char		**red_files;
+	int			red_count;
+	char		**inp_files;
+	int			inp_count;
+	int			orig_imp;
+	int			*write_append;
+	int			out_pipe_red;
+	int			temp_fd_0;
+	int			temp_fd_1;
+}				t_args;
 
 typedef struct	s_vars
 {
-	int id;
-	int fd[2];
-	int fdd;
-	int ex_res;
-	char *str;
+	int			id;
+	int			fd[2];
+	int			fdd;
+	int			ex_res;
+	char		*str;
 }				t_vars;
 
 /*
 ** structure.c
 */
-int		init_arg_struct(t_args *args);
-void	free_arg_struct(t_args *args);
+int				init_arg_struct(t_args *args);
+void			free_arg_struct(t_args *args);
 /*
 ** parser.c
 */
-int		clean_last_whitespace(t_args *args);
-int		parser(t_args *args, char *input_str);
+int				clean_last_whitespace(t_args *args);
+int				parser(t_args *args, char *input_str);
 /*
 ** parser_env.c
 */
-int		parse_env(t_args *args, char ***strarr, int *strnum, char **str);
-char	*find_env_value(t_args *args, char *env_name, int i);
-char	*parse_env_name(char **str);
+int				parse_env(t_args *args, char ***strarr
+							, int *strnum, char **str);
+char			*find_env_value(t_args *args, char *env_name, int i);
+char			*parse_env_name(char **str);
 /*
 ** parser_escape_symbol.c
 */
-int		replace_escape_symbol(char **dst, char **str);
-int		replace_escape_symbol_in_doublequotes(char **dst, char **str);
+int				replace_escape_symbol(char **dst, char **str);
+int				replace_escape_symbol_in_doublequotes(char **dst
+														, char **str);
 /*
 ** parser_quotes.c
 */
-int		add_doublequoted_str_to_str(t_args *args, char ***strarr, int *strnum, char **str);
-int		add_signalquoted_str_to_str(char **dst, char **str);
+int				add_doublequoted_str_to_str(t_args *args, char ***strarr
+									, int *strnum, char **str);
+int				add_signalquoted_str_to_str(char **dst, char **str);
 /*
 ** parser_redirect.c
 */
-int		parse_redirect(t_args *args, char ***strarr, int *strnum, char **str);
+int				parse_redirect(t_args *args, char ***strarr
+								, int *strnum, char **str);
 /*
 ** parser_semicolon.c
 */
-int		check_semicolon(t_args *args, char **str);
+int				check_semicolon(t_args *args, char **str);
 /*
 ** pasrer_spaces.c
 */
-int		parse_spaces(char ***strarr, int *strnum, char **str);
+int				parse_spaces(char ***strarr, int *strnum, char **str);
 /*
 ** parser_pipe.c
 */
-int		parse_pipe(t_args *args);
+int				parse_pipe(t_args *args);
 /*
 ** cd.c
 */
-char	**cd(char **args, char **env);
-
+char			**cd(char **args, char **env);
+char			*get_directory(void);
+int				check_path(char **args);
+char			**change_env(char **env, char *oldpwd, char *pwd);
+/*
+** cd_no_args.c
+*/
+char			**cd_home(char **env);
 /*
 ** echo.c
 */
-void	echo(char **args);
+void			echo(char **args);
 /*
 ** env.c
 */
-void	envp(char **env);
+void			envp(char **env);
 /*
 ** exit.c
 */
-void	my_exit(char **arg, char **env);
+void			my_exit(char **arg, char **env);
 /*
 ** export.c
 */
-char	**export(char **args, char **env);
+char			**export(char **args, char **env);
 /*
 ** export_unset_2.c
 */
-int		check_args_export(char *arg);
-int		keylen(char *key);
-char	**unset(char **args, char **env);
+int				check_args_export(char *arg);
+int				keylen(char *key);
+char			**unset(char **args, char **env);
 /*
 ** pwd.c
 */
-void	pwd(void);
-
+void			pwd(void);
 /*
 ** from_file.c (trash)
 */
-void	from_file(t_args *x);
+void			from_file(t_args *x);
 /*
 ** from_file_imp.c (trash)
 */
-void	from_file_imp(t_args *x);
+void			from_file_imp(t_args *x);
 /*
 ** exec.c
 */
-void	exec_command(t_args *x);
-int     find_descriptor(t_args *x);
+void			exec_command(t_args *x);
+int				find_descriptor(t_args *x);
 /*
 ** exec_imp.c
 */
-void exec_command_imp(t_args *x);
+void			exec_command_imp(t_args *x);
 
 /*
 ** exec_signals.c
 */
-void sigint_skip(int signum);
-void sigquit_skip(int signum);
-void sigint_child(int signum);
-void sigquit_child(int signum);
+void			sigint_skip(int signum);
+void			sigquit_skip(int signum);
+void			sigint_child(int signum);
+void			sigquit_child(int signum);
 
 /*
 ** exec_utils.c
 */
-void clear_struct(t_args *x);
-int find_descriptor(t_args *x);
-int check_fork(t_vars *vars, int temp_fd_0);
-int check_pipe_fork(t_vars *vars);
+void			clear_struct(t_args *x);
+int				find_descriptor(t_args *x);
+int				check_fork(t_vars *vars, int temp_fd_0);
+int				check_pipe_fork(t_vars *vars);
 
 /*
 ** exec_utils.c
 */
-int try_execve(char **args, char **env);
+int				try_execve(char **args, char **env);
 
 /*
 ** implement.c
 */
-char **implement(char **args, char **env, int imp);
+char			**implement(char **args, char **env, int imp);
+
+/*
+** from_file.c
+*/
+void			from_file(t_args *x);
+int				open_input_file(t_args *x);
+
+/*
+** from_file_imp.c
+*/
+void			from_file_imp(t_args *x);
 
 /*
 ** main.c
 */
-void sigint(int sig);
-void sigquit(int sig);
+void			sigint(int sig);
+void			sigquit(int sig);
 #endif

@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/14 21:31:12 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/07 02:58:45 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		parse_redirect_symbols(t_args *args, char ***strarr
 	if (!(*(args->argv)) && is_str_empty(*str))
 	{
 		ft_putstr("bash: syntax error near unexpected token `newline'\n");
-		return (exit_status = 2);
+		return (g_exit_status = 2);
 	}
 	while (!ft_strchr(FILE_SPEC_SYMBOLS, **str))
 	{
@@ -78,8 +78,12 @@ int		parse_redirect(t_args *args, char ***strarr, int *strnum, char **str)
 
 	status = 1;
 	status = add_empty_str_in_strarr(strarr, strnum);
-	if (**str == '>')
+	if (**str == '>' && args->write_to == 3)
+		args->out_pipe_red = 2;
+	else if (**str == '>')
 		args->write_to = 2;
+	else
+		args->write_to = 3;
 	(*str)++;
 	if (**str == '>')
 	{

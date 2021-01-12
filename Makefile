@@ -6,7 +6,7 @@
 #    By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/26 19:32:53 by enoelia           #+#    #+#              #
-#    Updated: 2021/01/06 20:18:46 by enoelia          ###   ########.fr        #
+#    Updated: 2021/01/08 17:01:46 by lasagna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ C = main.c \
 	parser/parser.c \
 	parser/structure.c\
 	builtins_imp/cd.c \
+	builtins_imp/cd_no_args.c \
 	builtins_imp/echo.c \
 	builtins_imp/env.c \
 	builtins_imp/exit.c \
@@ -36,7 +37,9 @@ C = main.c \
 	exec_commands/implement.c \
 	exec_commands/exec_signals.c \
 	exec_commands/exec_utils.c \
-	exec_commands/execve.c
+	exec_commands/execve.c \
+	exec_commands/from_file.c \
+	exec_commands/from_file_imp.c
 
 C_SRC =  $(addprefix $(SRC)/, $C)
 

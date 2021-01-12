@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlavelle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 14:59:36 by tlavelle          #+#    #+#             */
-/*   Updated: 2021/01/07 14:59:43 by tlavelle         ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int		check_args_unset(char *arg)
 			write(1, "bash: unset: '", 14);
 			write(1, arg, ft_strlen(arg));
 			write(1, "': not a valid identifier\n", 26);
-			exit_status = 1;
+			g_exit_status = 1;
 			return (1);
 		}
 		c++;

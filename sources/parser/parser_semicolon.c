@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/06 19:45:00 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/06 19:45:08 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_semicolon(t_args *args, char **str)
 			ft_putstr("`;;'\n");
 		else
 			ft_putstr("`;'\n");
-		exit_status = 2;
+		g_exit_status = 2;
 		return (2);
 	}
 	(*str)--;

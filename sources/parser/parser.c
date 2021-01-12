@@ -6,7 +6,7 @@
 /*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/24 15:57:20 by enoelia           #+#    #+#             */
-/*   Updated: 2021/01/07 03:37:32 by enoelia          ###   ########.fr       */
+/*   Updated: 2021/01/08 15:18:11 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int		clean_last_whitespace(t_args *args)
 		return (1);
 	if (args->argv[args->argc][0] == '\0')
 		remove_last_str_in_strarr(&(args->argv), &(args->argc));
-	if (!(add_strarr_to_strarr(&args->argv, &(args->inp_files))))
-		return (0);
 	return (1);
 }
 

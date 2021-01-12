@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   implement.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlavelle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 15:09:15 by tlavelle          #+#    #+#             */
-/*   Updated: 2021/01/07 15:09:17 by tlavelle         ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ char	**implement(char **args, char **env, int imp)
 {
 	int status;
 
-	status = exit_status;
-	exit_status = 0;
+	status = g_exit_status;
+	g_exit_status = 0;
 	if (imp == 1)
 		echo(args);
 	else if (imp == 2)
@@ -32,7 +32,7 @@ char	**implement(char **args, char **env, int imp)
 		envp(env);
 	else
 	{
-		exit_status = status;
+		g_exit_status = status;
 		my_exit(args, env);
 	}
 	return (env);

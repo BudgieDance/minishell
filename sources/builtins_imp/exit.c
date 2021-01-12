@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlavelle <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: enoelia <enoelia@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 14:13:02 by tlavelle          #+#    #+#             */
-/*   Updated: 2021/01/07 14:13:08 by tlavelle         ###   ########.fr       */
+/*   Updated: 2021/01/08 21:39:57 by enoelia          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_array(char **env)
 	}
 }
 
-int		check_exit_status(char *status)
+int		check_g_exit_status(char *status)
 {
 	while (*status != '\0')
 	{
@@ -47,10 +47,10 @@ void	my_exit(char **arg, char **env)
 	temp++;
 	if (*temp != NULL)
 	{
-		if (check_exit_status(*temp) == 0)
-			exit_status = ft_atoi(*temp);
+		if (check_g_exit_status(*temp) == 0)
+			g_exit_status = ft_atoi(*temp);
 	}
 	free_array(arg);
 	free_array(env);
-	exit(exit_status);
+	exit(g_exit_status);
 }
